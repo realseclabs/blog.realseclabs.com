@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RealSec Labs - Security Blog Platform</title>
+    <title>RealSec Labs - Security Blog</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,13 +92,15 @@
             color: #f0f0f0;
         }
         .loading-spinner {
-            border: 4px solid rgba(255, 107, 0, 0.1);
-            border-left-color: #FF6B00;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            border: 4px solid rgba(255, 107, 0, 0.2); /* Light border */
+            border-top-color: #FF6B00; /* Spinner color */
+            border-radius: 50%; /* Make it circular */
+            animation: spin 1s linear infinite; /* Spin animation */
         }
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg); /* Full rotation */
+            }
         }
         .blog-content h1 {
             font-size: 1.875rem;
@@ -174,6 +176,26 @@
             background-color: #2a2a2a;
         }
     </style>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <style>
+        footer {
+            background-color: #101010; /* Dark background */
+            color: #f0f0f0; /* Light text */
+        }
+
+        footer a {
+            color: #FF6B00; /* Primary color for links */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body class="min-h-screen font-sans">
@@ -193,9 +215,9 @@
             <div id="mobile-menu" class="hidden md:flex w-full md:w-auto md:items-center">
                 <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium">
                     <li><a href="index.html" class="nav-link block py-2 text-white hover:text-primary">Home</a></li>
-                    <li><a href="#" class="nav-link block py-2 text-white hover:text-primary">All Blogs</a></li>
-                    <li><a href="#" class="nav-link block py-2 text-white hover:text-primary">Categories</a></li>
-                    <li><a href="#" class="nav-link block py-2 text-white hover:text-primary">About</a></li>
+                    <li><a href="#latest-articles" class="nav-link block py-2 text-white hover:text-primary">All Blogs</a></li>
+                    <li><a href="#" id="trigger-modal" class="nav-link block py-2 text-white hover:text-primary">Categories</a></li>
+                    <li><a href="https://realseclabs.com/" class="nav-link block py-2 text-white hover:text-primary">RealSec Labs</a></li>
                 </ul>
             </div>
         </nav>
@@ -222,11 +244,14 @@
                         </div>
                         <div class="mt-4">
                             <h4 class="font-medium mb-2">Popular Categories</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <a href="#" class="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full hover:bg-primary hover:text-white transition-colors">Penetration Testing</a>
-                                <a href="#" class="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full hover:bg-primary hover:text-white transition-colors">IAM</a>
-                                <a href="#" class="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full hover:bg-primary hover:text-white transition-colors">SOC</a>
-                                <a href="#" class="bg-primary/20 text-primary text-sm py-1 px-3 rounded-full hover:bg-primary hover:text-white transition-colors">Zero Trust</a>
+                            <div class="flex items-center gap-2">
+                                <div id="popular-categories" class="flex flex-wrap gap-2">
+                                    <!-- Top 4 categories will be dynamically inserted here -->
+                                </div>
+                                <!-- Add the + button -->
+                                <button id="open-categories-modal" class="bg-primary text-white text-sm py-1 px-3 rounded-full hover:bg-primary/80 transition-colors">
+                                    +
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -236,42 +261,41 @@
                 <div class="bg-secondary rounded-xl overflow-hidden shadow-lg mb-12 card-hover">
                     <div class="md:flex">
                         <div class="md:w-1/2">
-                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2670&auto=format&fit=crop" 
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop" 
                                  alt="Featured Blog Post" 
                                  class="w-full h-full object-cover max-h-80 md:max-h-none">
                         </div>
                         <div class="md:w-1/2 p-6 md:p-8">
                             <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Featured</span>
-                                <span class="text-gray-400 text-xs ml-2">June 15, 2023</span>
+                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Coming Soon</span>
+                                <span class="text-gray-400 text-xs ml-2">April 19, 2025 </span>
                             </div>
-                            <h2 class="text-2xl md:text-3xl font-bold mb-4">Advanced Threat Hunting Techniques for Blue Teams</h2>
+                            <h2 class="text-2xl md:text-3xl font-bold mb-4">Exploring API Security — New Blog on the Way</h2>
                             <p class="text-gray-300 mb-6 line-clamp-3">
-                                Learn how to implement proactive threat hunting methodologies to detect sophisticated adversaries before they complete their objectives. This comprehensive guide covers the latest techniques for identifying malicious activity that evades traditional detection.
-                            </p>
+                                A blog based on my research and personal learning about real-world API security challenges and solutions.                            </p>
                             <div class="flex items-center mb-6">
                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                    <span class="font-bold text-sm">JD</span>
+                                    <span class="font-bold text-sm">GD</span>
                                 </div>
                                 <div>
-                                    <div class="font-medium">John Doe</div>
+                                    <div class="font-medium">Glan Loyan Dsouza</div>
                                     <div class="text-xs text-gray-400">Security Researcher</div>
                                 </div>
                             </div>
-                            <a href="./blog1.html" class="inline-flex items-center text-primary hover:underline" onclick="viewBlog('advanced-threat-hunting'); return false;">
-                                Read Article <i class="bi bi-arrow-right ml-2"></i>
+                            <a href="./blog1.html" class="inline-flex items-center text-primary hover:underline" onclick="showLoader(event); return false;">
+                                <div class="loading-spinner w-5 h-5 border-2 border-t-primary rounded-full animate-spin"></div>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <h3 class="text-2xl font-bold mb-6">Latest Articles</h3>
-                
+                <h3 id="latest-articles" class="text-2xl font-bold mb-6">Latest Articles</h3>
+
                 <!-- Blog Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Blog Card 1 -->
-                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1563863536592-7adc25814c88?q=80&w=2668&auto=format&fit=crop" alt="IAM Solutions" class="w-full h-48 object-cover">
+                    <!-- Current Card (Hidden) -->
+                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover hidden">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop" alt="IAM Solutions" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-3">
                                 <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">IAM</span>
@@ -286,114 +310,220 @@
                             </a>
                         </div>
                     </div>
-                    
-                    <!-- Blog Card 2 -->
+
+                    <!-- New Card with Spinner Loader -->
                     <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop" alt="Web Application Security" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Penetration Testing</span>
-                                <span class="text-gray-400 text-xs ml-auto">April 12, 2023</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Advanced Web Application Penetration Testing Techniques</h3>
-                            <p class="text-gray-300 mb-4 line-clamp-3">
-                                Discover the latest techniques and methodologies for identifying and exploiting vulnerabilities in modern web applications. From API security to client-side frameworks.
+                        <div class="p-6 flex flex-col items-center justify-center h-48">
+                            <div class="loading-spinner w-10 h-10 border-4 border-t-primary rounded-full animate-spin mb-4"></div>
+                            <h3 class="text-xl font-bold text-center">Coming Soon</h3>
+                            <p class="text-gray-300 text-center text-sm mt-2">
+                                Stay tuned for our upcoming blog post!
                             </p>
-                            <a href="#" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('advanced-web-pentest'); return false;">
-                                Read more <i class="bi bi-arrow-right ml-2"></i>
-                            </a>
                         </div>
                     </div>
-                    
-                    <!-- Blog Card 3 -->
-                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1633265486064-086b219458ec?q=80&w=2670&auto=format&fit=crop" alt="Incident Response" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">SOC</span>
-                                <span class="text-gray-400 text-xs ml-auto">March 5, 2023</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Building an Effective Incident Response Playbook</h3>
-                            <p class="text-gray-300 mb-4 line-clamp-3">
-                                A comprehensive guide to creating, implementing, and maintaining incident response playbooks that help security teams respond effectively to security incidents.
-                            </p>
-                            <a href="#" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('incident-response-playbook'); return false;">
-                                Read more <i class="bi bi-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Blog Card 4 -->
-                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1610986602538-431d65df4385?q=80&w=2561&auto=format&fit=crop" alt="Cloud Security" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Cloud Security</span>
-                                <span class="text-gray-400 text-xs ml-auto">February 18, 2023</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Securing Multi-Cloud Environments</h3>
-                            <p class="text-gray-300 mb-4 line-clamp-3">
-                                Best practices and strategies for securing infrastructure and applications across multiple cloud providers. Learn about centralized identity management and consistent security controls.
-                            </p>
-                            <a href="#" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('multi-cloud-security'); return false;">
-                                Read more <i class="bi bi-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Blog Card 5 -->
-                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2670&auto=format&fit=crop" alt="Container Security" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">DevSecOps</span>
-                                <span class="text-gray-400 text-xs ml-auto">January 29, 2023</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Container Security Best Practices for Kubernetes</h3>
-                            <p class="text-gray-300 mb-4 line-clamp-3">
-                                A detailed look at securing containerized applications in Kubernetes environments, from image scanning to runtime protection and network policies.
-                            </p>
-                            <a href="#" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('kubernetes-security'); return false;">
-                                Read more <i class="bi bi-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Blog Card 6 -->
-                    <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                        <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=2670&auto=format&fit=crop" alt="Mobile Security" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-3">
-                                <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Mobile Security</span>
-                                <span class="text-gray-400 text-xs ml-auto">January 10, 2023</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Securing Mobile Applications: OWASP Mobile Top 10</h3>
-                            <p class="text-gray-300 mb-4 line-clamp-3">
-                                An exploration of the OWASP Mobile Top 10 vulnerabilities and how to address them in your mobile application development lifecycle.
-                            </p>
-                            <a href="./blogs/blog1.html" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('mobile-security'); return false;">
-                                Read more <i class="bi bi-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Pagination -->
-                <div class="mt-12 flex justify-center">
-                    <nav class="inline-flex rounded-md shadow">
-                        <a href="#" class="py-2 px-4 bg-secondary border border-gray-700 rounded-l-md hover:bg-gray-800 text-gray-400">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
-                        <a href="#" class="py-2 px-4 bg-primary text-white border border-primary">1</a>
-                        <a href="#" class="py-2 px-4 bg-secondary border border-gray-700 hover:bg-gray-800 text-gray-400">2</a>
-                        <a href="#" class="py-2 px-4 bg-secondary border border-gray-700 hover:bg-gray-800 text-gray-400">3</a>
-                        <a href="#" class="py-2 px-4 bg-secondary border border-gray-700 rounded-r-md hover:bg-gray-800 text-gray-400">
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
-                    </nav>
                 </div>
             </div>
         </section>
-        </main>
+    </main>
+    <script>
+        function showLoader(event) {
+            const link = event.target.closest("a");
+            const spinner = document.createElement("div");
+            spinner.className = "loading-spinner w-5 h-5 border-2 border-t-primary rounded-full animate-spin";
+            link.innerHTML = ""; // Clear the link content
+            link.appendChild(spinner); // Add the spinner
+        }
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("blank-modal");
+        const closeModal = document.getElementById("close-modal");
+
+        // Show the modal (you can trigger this with a button or link)
+        function showModal() {
+            modal.classList.remove("hidden");
+        }
+
+        // Hide the modal when the close button is clicked
+        closeModal.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        // Hide the modal when clicking outside the modal content
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+
+        // Example: Trigger the modal (you can replace this with your own trigger)
+        document.querySelector("#trigger-modal").addEventListener("click", showModal);
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("blank-modal");
+        const closeModal = document.getElementById("close-modal");
+        const triggerModal = document.getElementById("trigger-modal");
+
+        // Show the modal when the "Categories" button is clicked
+        triggerModal.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            modal.classList.remove("hidden");
+        });
+
+        // Hide the modal when the close button is clicked
+        closeModal.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        // Hide the modal when clicking outside the modal content
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Define categories in a single array
+        const categories = [
+            "Penetration Testing",
+            "IAM",
+            "SOC",
+            "Zero Trust",
+            "Vulnerability Management",
+            "Incident Response",
+            "Threat Intelligence",
+            "Security Operations",
+            "Cloud Security",
+        ];
+
+        // Function to render categories
+        function renderCategories(containerId, limit = null) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ""; // Clear existing content
+            const categoriesToRender = limit ? categories.slice(0, limit) : categories;
+            categoriesToRender.forEach((category) => {
+                const categoryElement = document.createElement("a");
+                categoryElement.href = "#";
+                categoryElement.className = "bg-primary/20 text-primary text-sm py-1 px-3 rounded-full hover:bg-primary hover:text-white transition-colors";
+                categoryElement.textContent = category;
+                container.appendChild(categoryElement);
+            });
+        }
+
+        // Render top 4 categories in the "Popular Categories" section
+        renderCategories("popular-categories", 4);
+
+        // Render all categories in the modal
+        renderCategories("modal-categories");
+
+        // Handle the + button click to open the modal
+        const openCategoriesModal = document.getElementById("open-categories-modal");
+        const modal = document.getElementById("blank-modal");
+        const closeModal = document.getElementById("close-modal");
+
+        openCategoriesModal.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        // Close the modal when the close button is clicked
+        closeModal.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        // Close the modal when clicking outside the modal content
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+    });
+    </script>
+    <!-- Blank Modal -->
+    <div id="blank-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-secondary text-gray-300 rounded-lg shadow-lg p-6 w-11/12 md:w-1/2">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Categories</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-primary text-2xl">&times;</button>
+            </div>
+            <div id="modal-categories" class="flex flex-wrap gap-2">
+                <!-- Categories will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    <footer class="bg-[#101010] text-gray-300 py-12 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex flex-col items-start mb-6">
+                        <img src="./assets/images/RealSecLabs-Logo-nobg.png" alt="RealSec Labs Logo" class="h-10 mb-3" onclick="location.href='#home';">
+                        <p class="text-gray-400">
+                            Building Security through Trust.
+                        </p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary">
+                            <i class="bi bi-twitter-x"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary">
+                            <i class="bi bi-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="./index.html" class="text-gray-400 hover:text-primary">Home</a></li>
+                        <li><a href="#latest-articles" class="text-gray-400 hover:text-primary">Latest Articles</a></li>
+                        <li><a href="#" id="trigger-modal" class="text-gray-400 hover:text-primary">Categories</a></li>
+                        
+                        <li><a href="https://realseclabs.com/" class="text-gray-400 hover:text-primary">realseclabs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Services</h4>
+                    <!-- Spinner Loader -->
+                    <div class="flex justify-center mt-4">
+                        <div class="loading-spinner w-8 h-8 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+                    </div>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Subscribe to Our Newsletter</h4>
+                    <!-- Spinner Loader -->
+                    <div class="flex justify-center mt-4">
+                        <div class="loading-spinner w-8 h-8 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-sm text-gray-400">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>&copy; 2025 RealSec Labs. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-primary">Privacy Policy</a>
+                        <a href="#" class="hover:text-primary">Terms of Service</a>
+                        <a href="#" class="hover:text-primary">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
 </body>
 </html>
