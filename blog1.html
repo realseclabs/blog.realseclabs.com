@@ -230,7 +230,6 @@
                 </div>
 
                 <div class="relative bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
-                    <!-- View Count Badge -->
                     <div id="view-count" class="absolute top-4 right-4 bg-primary text-white text-sm font-bold py-1 px-3 rounded-full shadow-lg">
                         Views: 0
                     </div>
@@ -419,13 +418,13 @@ fetch('https://api.example.com/users/123/data', {
             });
         </script>
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getDatabase, ref, onValue, set, increment } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAQPJw_JixR0JySBulM92POhJhu6cYIT0I",
     authDomain: "realseclabsblog-c5d3e.firebaseapp.com",
@@ -438,66 +437,47 @@ fetch('https://api.example.com/users/123/data', {
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-  const db = getFirestore();
-</script>
-
-<script type="module">
-  import { getDatabase, ref, onValue, set, increment, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
-  import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  const db = getFirestore(app);
 
   document.addEventListener("DOMContentLoaded", async () => {
-    const database = getDatabase();
-
-    // Unique ID for the blog post
-    const blogId = "blog1"; // Replace with a unique ID for each blog post
-    const viewsRef = ref(database, `views/${blogId}`);
-
-    // Increment the view count
-    runTransaction(viewsRef, (currentViews) => {
-      return (currentViews || 0) + 1;
-    });
-
-    // Display the view count
-    onValue(viewsRef, (snapshot) => {
-      const viewCount = snapshot.val() || 0;
-      document.getElementById("view-count").textContent = `Views: ${viewCount}`;
-    });
-
-    // Firestore integration
-    const db = getFirestore();
-
-    // Reference to a document in the "blogs" collection
+    const blogId = "blog1"; // Unique ID for the blog post
     const blogRef = doc(db, "blogs", blogId);
 
-    // Set data for the document
-    await setDoc(blogRef, {
-        title: "Advanced Web Application Penetration Testing Techniques",
-        likes: 0,
-        views: 0,
-    });
+    try {
+      // Check if the document exists
+      const blogDoc = await getDoc(blogRef);
+      if (!blogDoc.exists()) {
+        // Create the document if it doesn't exist
+        await setDoc(blogRef, {
+          title: "Advanced Web Application Penetration Testing Techniques",
+          views: 1, // Initialize views
+          createdAt: new Date().toISOString(),
+        });
+        console.log("Document created in Firestore.");
+      } else {
+        // Increment the views field in Firestore
+        await updateDoc(blogRef, {
+          views: increment(1),
+        });
+        console.log("Document updated in Firestore.");
+      }
 
-    console.log("Document created or updated!");
-
-    // Reference to the "blogs" collection
-    const blogsCollection = collection(db, "blogs");
-
-    // Add a new document with an auto-generated ID
-    const docRef = await addDoc(blogsCollection, {
-        title: "Another Blog Post",
-        likes: 0,
-        views: 0,
-    });
-
-    console.log("Document created with ID:", docRef.id);
+      // Fetch the updated view count
+      const updatedBlogDoc = await getDoc(blogRef);
+      if (updatedBlogDoc.exists()) {
+        const updatedData = updatedBlogDoc.data();
+        const viewCountElement = document.getElementById("view-count");
+        if (viewCountElement) {
+          viewCountElement.textContent = `Views: ${updatedData.views}`;
+        } else {
+          console.error("View count element not found in the DOM.");
+        }
+      }
+    } catch (error) {
+      console.error("Error interacting with Firestore:", error);
+    }
   });
 </script>
-
-
-
-<button id="like-button" class="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/80">
-    Like
-</button>
 
 <footer class="bg-[#101010] text-gray-300 py-12 px-4">
     <div class="container mx-auto">
@@ -531,19 +511,20 @@ fetch('https://api.example.com/users/123/data', {
                 <h4 class="font-bold text-lg mb-6">Quick Links</h4>
                 <ul class="space-y-2">
                     <li><a href="./index.html" class="text-gray-400 hover:text-primary">Home</a></li>
-                    <li><a href="./index.html/#latest-articles" class="text-gray-400 hover:text-primary">Latest Articles</a></li>div>
-                      
-                    <li><a href="https://realseclabs.com/" class="text-gray-400 hover:text-primary">realseclabs</a></li>   <!-- Services -->
-                </ul>            <div>
-        </div>                <h4 class="font-bold text-lg mb-6">Services</h4>
-    </div>        <!-- Spinner Loader -->
-</footer>         <div class="flex justify-center mt-4">
+                    <li><a href="./index.html/#latest-articles" class="text-gray-400 hover:text-primary">Latest Articles</a></li>
+                    
+                    
+                    <li><a href="https://realseclabs.com/" class="text-gray-400 hover:text-primary">realseclabs</a></li>
+                </ul>
+            </div>
+            
+            <!-- Services -->
+            <div>
+                <h4 class="font-bold text-lg mb-6">Services</h4>
+                <!-- Spinner Loader -->
+                <div class="flex justify-center mt-4">
                     <div class="loading-spinner w-8 h-8 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-
-
-
-
-</html>	</body>                </div>
+                </div>
             </div>
             
             <!-- Newsletter -->
@@ -569,6 +550,5 @@ fetch('https://api.example.com/users/123/data', {
     </div>
 </footer>
 
-
-	</body>
+</body>
 </html>
