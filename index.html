@@ -442,6 +442,17 @@
         });
     });
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        // Toggle the mobile menu visibility
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+    });
+    </script>
     <!-- Blank Modal -->
     <div id="blank-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-secondary text-gray-300 rounded-lg shadow-lg p-6 w-11/12 md:w-1/2">
