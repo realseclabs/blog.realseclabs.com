@@ -173,6 +173,9 @@
         .blog-content table th {
             background-color: #2a2a2a;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -396,6 +399,22 @@ fetch('https://api.example.com/users/123/data', {
             });
         </script>
 
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (menuToggle && mobileMenu) {
+      // Add click event listener to toggle the menu
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    } else {
+      console.error("Menu toggle button or mobile menu element not found.");
+    }
+  });
+</script>
+
 
 
 <script type="module">
@@ -471,23 +490,47 @@ fetch('https://api.example.com/users/123/data', {
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Load header
-        fetch("blog-header.html")
-            .then(response => response.text())
-            .then(data => {
-                document.body.insertAdjacentHTML("afterbegin", data);
-            })
-            .catch(error => console.error("Error loading header:", error));
+  document.addEventListener("DOMContentLoaded", () => {
+    // Load header
+    fetch("blog-header.html")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load header: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.body.insertAdjacentHTML("afterbegin", data);
+        console.log("Header loaded successfully.");
 
-        // Load footer
-        fetch("blog-footer.html")
-            .then(response => response.text())
-            .then(data => {
-                document.body.insertAdjacentHTML("beforeend", data);
-            })
-            .catch(error => console.error("Error loading footer:", error));
-    });
+        // Add event listener for menu toggle after header is loaded
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (menuToggle && mobileMenu) {
+          menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+          });
+        } else {
+          console.error("Menu toggle button or mobile menu element not found.");
+        }
+      })
+      .catch(error => console.error("Error loading header:", error));
+
+    // Load footer
+    fetch("blog-footer.html")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load footer: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then(data => {
+        document.body.insertAdjacentHTML("beforeend", data);
+        console.log("Footer loaded successfully.");
+      })
+      .catch(error => console.error("Error loading footer:", error));
+  });
 </script>
 
 
