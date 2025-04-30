@@ -1,0 +1,14 @@
+[
+    {
+        "blogId": "dynamic-malware-analysis",
+        "articles": [
+            {
+                "title": "Dynamic Malware Analysis",
+                "url": "./dynamic-malware-analysis.html",
+                "image": "./assets/images/dynamic-malware-analysis.jpg",
+                
+                "date": "March 18, 2023"
+            }
+        ]
+    }
+]

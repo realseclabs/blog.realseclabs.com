@@ -1,0 +1,16 @@
+[
+    {
+        "blogId": "dynamic-malware-analysis",
+        "author": {
+            "name": "Glan Loyan Dsouza",
+            "role": "Founder RealSec Labs",
+            "bio": "",
+            "image": "./assets/images/Glan-Dsouza RealSec Labs.jpg",
+            "socials": {
+                
+                "linkedin": "https://linkedin.com/in/glanloyandsouza",
+                "github": "https://github.com/realseclabs"
+            }
+        }
+    }
+]
