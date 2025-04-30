@@ -322,6 +322,9 @@
                         </div>
                     </div>
                 </div>
+                <div id="blog-list" class="mt-8">
+                    <!-- Filtered blogs will be displayed here -->
+                </div>
             </div>
         </section>
     </main>
@@ -451,6 +454,100 @@
         menuToggle.addEventListener("click", () => {
             mobileMenu.classList.toggle("hidden");
         });
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tagLinks = document.querySelectorAll(".tag-link");
+        const blogListContainer = document.getElementById("blog-list");
+
+        // Fetch blogs metadata
+        async function fetchBlogs() {
+            const response = await fetch("blogs.json");
+            return response.json();
+        }
+
+        // Display blogs based on the selected tag
+        async function displayBlogsByTag(tag) {
+            const blogs = await fetchBlogs();
+            const filteredBlogs = blogs.filter(blog => blog.tags.includes(tag));
+
+            // Clear existing blogs
+            blogListContainer.innerHTML = "";
+
+            // Display filtered blogs
+            if (filteredBlogs.length > 0) {
+                filteredBlogs.forEach(blog => {
+                    const blogItem = document.createElement("div");
+                    blogItem.className = "p-4 bg-secondary rounded-lg shadow-md mb-4";
+                    blogItem.innerHTML = `
+                        <h3 class="text-xl font-bold text-primary mb-2">${blog.title}</h3>
+                        <a href="${blog.url}" class="text-sm text-gray-300 hover:text-primary">Read More</a>
+                    `;
+                    blogListContainer.appendChild(blogItem);
+                });
+            } else {
+                blogListContainer.innerHTML = `<p class="text-gray-400">No blogs found for the tag "${tag}".</p>`;
+            }
+        }
+
+        // Add click event listeners to tags
+        tagLinks.forEach(tagLink => {
+            tagLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                const tag = tagLink.getAttribute("data-tag");
+                displayBlogsByTag(tag);
+            });
+        });
+    });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const blogListContainer = document.getElementById("blog-list");
+
+        // Fetch blogs metadata
+        async function fetchBlogs() {
+            const response = await fetch("blogs.json");
+            return response.json();
+        }
+
+        // Get the tag from the URL query parameter
+        function getTagFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("tag");
+        }
+
+        // Display blogs based on the selected tag
+        async function displayBlogsByTag(tag) {
+            const blogs = await fetchBlogs();
+            const filteredBlogs = blogs.filter(blog => blog.tags.includes(tag));
+
+            // Clear existing blogs
+            blogListContainer.innerHTML = "";
+
+            // Display filtered blogs
+            if (filteredBlogs.length > 0) {
+                filteredBlogs.forEach(blog => {
+                    const blogItem = document.createElement("div");
+                    blogItem.className = "p-4 bg-secondary rounded-lg shadow-md mb-4";
+                    blogItem.innerHTML = `
+                        <h3 class="text-xl font-bold text-primary mb-2">${blog.title}</h3>
+                        <a href="${blog.url}" class="text-sm text-gray-300 hover:text-primary">Read More</a>
+                    `;
+                    blogListContainer.appendChild(blogItem);
+                });
+            } else {
+                blogListContainer.innerHTML = `<p class="text-gray-400">No blogs found for the tag "${tag}".</p>`;
+            }
+        }
+
+        // Initialize the page
+        const tag = getTagFromURL();
+        if (tag) {
+            displayBlogsByTag(tag);
+        } else {
+            blogListContainer.innerHTML = `<p class="text-gray-400">Please select a tag to view related blogs.</p>`;
+        }
     });
     </script>
     <!-- Blank Modal -->
