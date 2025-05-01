@@ -222,6 +222,21 @@
             padding: 1.5rem;
         }
     </style>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
 </head>
 
 <body class="min-h-screen font-sans">
@@ -286,16 +301,19 @@
                 </div>
 
                 <!-- Featured Post -->
-                <div class="featured-card">
-                    <img src="./assets/images/dynamic-malware-analysis-display.jpg" alt="Featured Blog Post">
-                    <div class="content">
+                <div class="featured-card flex flex-col md:flex-row bg-secondary rounded-xl overflow-hidden shadow-lg mb-12">
+                    <img src="./assets/images/dynamic-malware-analysis.jpg" 
+                         alt="Featured Blog Post" 
+                         class="w-full md:w-1/2 h-48 md:h-auto object-cover transform transition-transform duration-500 hover:scale-105 hover:shadow-xl fade-in">
+                    <div class="content p-6 md:p-8 flex flex-col justify-center">
                         <div class="flex items-center mb-3">
                             <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Coming Soon</span>
                             <span class="text-gray-400 text-xs ml-2">April 19, 2025</span>
                         </div>
-                        <h2 class="text-2xl md:text-3xl font-bold mb-4">Dynamic Malware Anaysis</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4">Dynamic Malware Analysis</h2>
                         <p class="text-gray-300 mb-6 line-clamp-3">
-                            Learn how to analyze malware dynamically in a controlled environment.                        </p>
+                            Learn how to analyze malware dynamically in a controlled environment.
+                        </p>
                         <a href="./dynamic-malware-analysis.html" class="inline-flex items-center text-primary hover:underline">
                             Read more
                         </a>
