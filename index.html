@@ -237,6 +237,11 @@
             animation: fadeIn 1s ease-out;
         }
     </style>
+    <style>
+        .bg-gradient-to-t {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3), transparent);
+        }
+    </style>
 </head>
 
 <body class="min-h-screen font-sans">
@@ -268,62 +273,42 @@
 
     <!-- Main Content - Will be dynamically changed based on the current view -->
     <main id="main-content" class="min-h-screen pt-24">
-        <!-- Blog Listing Page (Default View) -->
-        <section id="blog-listing" class="py-8 px-4">
+        <!-- Upcoming Blog Section -->
+        <section id="upcoming-blog" class="py-12 px-4">
             <div class="container mx-auto">
-                <div class="flex flex-col md:flex-row mb-10">
-                    <div class="md:w-2/3">
-                        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4 gradient-text">
-                            Security Blog
-                        </h1>
-                        <p class="text-xl text-gray-300 mb-6">
-                            Expert insights, tips, and analysis on cybersecurity trends, vulnerabilities, and best practices
-                        </p>
-                    </div>
-                    <div class="md:w-1/3 md:pl-8 mt-6 md:mt-0">
-                        <div class="relative">
-                            <input type="text" placeholder="Search articles..." class="w-full bg-secondary border border-gray-700 rounded-md py-3 px-4 pl-10 focus:outline-none focus:border-primary">
-                            <i class="bi bi-search absolute left-3 top-3.5 text-gray-400"></i>
-                        </div>
-                        <div class="mt-4">
-                            <h4 class="font-medium mb-2">Popular Categories</h4>
-                            <div class="flex items-center gap-2">
-                                <div id="popular-categories" class="flex flex-wrap gap-2">
-                                    <!-- Top 4 categories will be dynamically inserted here -->
-                                </div>
-                                <!-- Add the + button -->
-                                <button id="open-categories-modal" class="bg-primary text-white text-sm py-1 px-3 rounded-full hover:bg-primary/80 transition-colors">
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Featured Post -->
-                <div class="featured-card flex flex-col md:flex-row bg-secondary rounded-xl overflow-hidden shadow-lg mb-12">
+                <div class="relative bg-gradient-to-r from-secondary to-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
+                    <!-- Blog Image -->
                     <img src="./assets/images/Command and control server-c2 server.jpg" 
-                         alt="Featured Blog Post" 
-                         class="w-full md:w-1/2 h-48 md:h-auto object-cover transform transition-transform duration-500 hover:scale-105 hover:shadow-xl fade-in">
-                    <div class="content p-6 md:p-8 flex flex-col justify-center">
-                        <div class="flex items-center mb-3">
+                         alt="Upcoming Blog Post" 
+                         class="w-full h-64 object-cover opacity-80">
+                    
+                    <!-- Gradient Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    
+                    <!-- Content -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <h2 class="text-3xl font-bold mb-2">Command And Control - C2 Server</h2>
+                        <p class="text-gray-300 mb-4">
+                            Inside the Hacker’s Nerve Center: Unpacking Command & Control Servers
+                        </p>
+                        <div class="flex items-center space-x-4">
                             <span class="bg-primary/20 text-primary text-xs py-1 px-2 rounded-full">Coming Soon</span>
-                            <span class="text-gray-400 text-xs ml-2"></span>
+                            <span class="text-gray-400 text-xs">May 10, 2025</span>
                         </div>
-                        <h2 class="text-2xl md:text-3xl font-bold mb-4">Command And Control - C2 Server</h2>
-                        <p class="text-gray-300 mb-6 line-clamp-3">
-                            Inside the Hacker’s Nerve Center: Unpacking Command & Control Servers                        </p>
-                        <a href="" class="inline-flex items-center text-primary hover:underline">
-                            
+                        <a href="#" class="mt-4 inline-block bg-primary text-white text-sm py-2 px-4 rounded-full hover:bg-primary/80 transition-colors">
+                            Learn More
                         </a>
                     </div>
                 </div>
-                
-                <h3 id="latest-articles" class="text-2xl font-bold mb-6">Latest Blog</h3>
+            </div>
+        </section>
 
-                <!-- Blog Grid -->
+        <!-- Latest Blog Section -->
+        <section id="latest-articles" class="py-8 px-4">
+            <div class="container mx-auto">
+                <h3 class="text-2xl font-bold mb-6">Latest Blog</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Current Card (Previously Hidden) -->
+                    <!-- Blog Cards -->
                     <div class="bg-secondary rounded-xl overflow-hidden shadow-lg transition-all duration-300 card-hover">
                         <img src="./assets/images/dynamic-malware-analysis.jpg" alt="IAM Solutions" class="w-full h-48 object-cover">
                         <div class="p-6">
@@ -335,22 +320,11 @@
                             <p class="text-gray-300 mb-4 line-clamp-3">
                                 A Simple and Beginner-Friendly Introduction to Dynamic Malware Analysis
                             </p>
-                            <a href="./dynamic-malware-analysis.html" class="text-primary inline-flex items-center hover:underline" onclick="viewBlog('dynamic-malware-analysis'); return false;">
+                            <a href="./dynamic-malware-analysis.html" class="text-primary inline-flex items-center hover:underline">
                                 Read more <i class="bi bi-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
-
-                
-                
-            </div>
-        </section>
-        <!-- Filtered Blogs Section -->
-        <section id="filtered-blogs" class="hidden py-8 px-4">
-            <div class="container mx-auto">
-                <h3 class="text-2xl font-bold mb-6">Discover More Under This Topic</h3>
-                <div id="filtered-blog-list" class="flex flex-wrap gap-6">
-                    <!-- Filtered blogs will be dynamically inserted here -->
                 </div>
             </div>
         </section>
@@ -793,6 +767,7 @@
             </div>
         </div>
     </div>
+    <!-- Footer -->
     <footer class="bg-[#101010] text-gray-300 py-12 px-4">
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -827,22 +802,21 @@
                         <li><a href="./index.html" class="text-gray-400 hover:text-primary">Home</a></li>
                         <li><a href="#latest-articles" class="text-gray-400 hover:text-primary">Latest Articles</a></li>
                         <li><a href="#" id="trigger-modal" class="text-gray-400 hover:text-primary">Categories</a></li>
-                        
                         <li><a href="https://realseclabs.com/" class="text-gray-400 hover:text-primary">realseclabs</a></li>
                     </ul>
                 </div>
                 
-                <!-- Services -->
-                
-                <!-- Newsletter -->
+                <!-- Policies Section -->
                 <div>
-                    <h4 class="font-bold text-lg mb-6">Want to Collab?</h4>
-                    <!-- Spinner Loader -->
-                    <div class="flex justify-center mt-4">
-                        <ul class="space-y-2">
-                            <li><a href="https://collab.realseclabs.com" class="text-gray-400 hover:text-primary">collab.realseclabs.com</a></li>
-                            </ul>
-                    </div>
+                    <h4 class="font-bold text-lg mb-6">Policies</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://realseclabs.com/privacy-policy" class="text-gray-400 hover:text-primary">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="https://realseclabs.com/copyright-notice" class="text-gray-400 hover:text-primary">Copyright Notice</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             
@@ -850,9 +824,9 @@
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <p>&copy; 2025 RealSec Labs. All rights reserved.</p>
                     <div class="flex space-x-6 mt-4 md:mt-0">
-                        <a href="#" class="hover:text-primary">Privacy Policy</a>
-                        <a href="#" class="hover:text-primary">Terms of Service</a>
-                        <a href="#" class="hover:text-primary">Cookies Policy</a>
+                        <a href="https://realseclabs.com/privacy-policy" class="hover:text-primary">Privacy Policy</a>
+                        <a href="https://realseclabs.com/copyright-notice" class="hover:text-primary">Copyright Notice</a>
+                        
                     </div>
                 </div>
             </div>
